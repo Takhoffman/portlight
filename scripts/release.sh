@@ -34,6 +34,9 @@ spctl --assess --type execute --verbose=2 "$APP"
 
 RELEASE_ZIP="$ROOT_DIR/dist/Portlight-$VERSION.zip"
 ditto -c -k --sequesterRsrc --keepParent "$APP" "$RELEASE_ZIP"
-shasum -a 256 "$RELEASE_ZIP" > "$ROOT_DIR/dist/SHA256SUMS"
+(
+    cd "$ROOT_DIR/dist"
+    shasum -a 256 "Portlight-$VERSION.zip" > SHA256SUMS
+)
 
 print "Release ready: $RELEASE_ZIP"

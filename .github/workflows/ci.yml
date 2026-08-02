@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: swift build
+      - name: Package app
+        run: ./scripts/build-app.sh
+      - name: Validate bundle
+        run: |
+          plutil -lint Resources/Info.plist
+          test -x dist/Portlight.app/Contents/MacOS/Portlight
